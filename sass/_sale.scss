@@ -1,0 +1,194 @@
+.sale {
+    background-image: url(../img/someThings/fs-bgs.png);
+    background-size : cover;
+    background-position : center;
+    width: 100%;
+    border-radius : 1rem;
+    padding-top: 2rem;
+
+    margin: 0 auto;
+    margin-bottom: 5rem;
+    border : 1px solid $border-color;
+    &-header {
+        display: flex;
+        align-items : center;
+        justify-content : space-between;
+        color  :#fff;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+        & > * {
+            width: 30%;
+        }
+        &-img {
+            .sale-img-mobile {
+                display: none;
+            }
+            @include repons(600px) {
+                .sale-img {
+                    display: none;
+                }
+                .sale-img-mobile {
+                    display: inline-block;
+                }
+            }
+            
+        }
+        &-countdown {
+            div {
+                display: flex;
+                align-items : center;
+                justify-content : center;
+                min-width: max-content;
+                font-size: 1.4rem;
+            }
+            p {
+                text-transform: capitalize;
+                min-width: max-content;
+            }
+            ul {
+                display: flex;
+                align-items: center;
+
+                li {
+                    color : #fff;
+                    font-size: 1.3rem;
+                    span {
+                        color : #000;
+                        background-color : #fff;
+                        border-radius : .5rem;
+                        margin : 0 .5rem;
+                        padding: .4rem .6rem;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+        &-more {
+            text-transform: capitalize;
+            font-weight: 600;
+            font-size: 1.4rem;
+            text-align: end;
+        }
+        &-more-mobile {
+            display: none;
+        }
+        @include repons(600px) {
+            &-more {
+                display: none;
+            }
+            &-more-mobile {
+                display: unset;
+                margin-top: 1rem;
+            }
+            &-countdown {
+                display: flex;
+                flex-direction : column;
+                align-items: flex-end;
+                width: 100%;
+            }
+        }
+    }
+    &-container {
+        padding: .3rem;
+        padding-top: 0;
+        width: 100%;
+        position: relative;
+    }
+    &-list {
+        padding-top: 2rem;
+    }
+    .phoneSale {
+        min-width: 20rem;
+        min-height: 32rem;
+        position: relative;
+        margin:1rem;
+        padding: 1.5rem;
+        padding-top: 3.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        
+        border-radius : 1rem;   
+        background-color : #fff;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        &-sale-per {
+            position: absolute;
+            top : 0;
+            left: -.4rem;
+            width: 40%;
+            p {
+                text-transform: capitalize;
+                font-weight: 700;
+                font-size: 1.2rem;
+                color : #fff;
+                position: absolute;
+                top :45%;
+                left : 1.5rem;
+                transform: translateY(-50%);
+                line-height: 0;
+            }
+            img {
+                width: 8rem;
+            }
+        }
+        &-img {
+            object-fit: cover;
+            width: 100%;
+        }
+        &-name {
+            text-transform: capitalize;
+            font-weight: 700;
+            font-size: 1.4rem;
+
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: auto;
+        }
+        &-option {
+            display: flex;
+            flex-wrap: wrap;
+            @include repons(500px) {
+                justify-content: center;
+            }
+            .btn {
+                &:not(:last-child) {
+                    margin-right: 1rem;
+                }
+                padding: 0.3rem;
+                border-radius: .5rem;
+                margin-bottom: 1rem;
+            }
+        }
+        &-price {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+            &-sale {
+                color : $primary-color;
+                font-weight: 600;
+                margin-right: 1rem;
+            }
+            &-old {
+                text-decoration: line-through;
+                font-weight: 300;
+                font-size: 1.3rem;
+            }
+        }
+        transition: all .3s ease;
+        &:hover {
+            transform: scale(1.03);
+            box-shadow: 0 2px 12px 0 rgb(0 0 0 / 30%);
+        }
+    }
+    &:hover {
+        .slider-btn {
+            transition:  all .3s ease;
+            opacity: 1;
+            visibility: visible;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+    }
+}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Điện thoại di động</title> 
+    
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+        <link rel="stylesheet" href="reset.css">
+      
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div class="overlay"></div>
+    <header class="header-wrapper">
+        <div class="header wrapper">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="./index.html">
+                        <svg stroke="transparent" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 269.231 50"> <defs> <pattern id="patternLogo" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 530 95"> <image width="530" height="95" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAhIAAABfCAYAAAC9ZC4kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6REQzNUE1OThENjI3MTFFQUJDOTI5NjNDMjAyQkNFMkQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6REQzNUE1OTlENjI3MTFFQUJDOTI5NjNDMjAyQkNFMkQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpERDM1QTU5NkQ2MjcxMUVBQkM5Mjk2M0MyMDJCQ0UyRCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpERDM1QTU5N0Q2MjcxMUVBQkM5Mjk2M0MyMDJCQ0UyRCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtMJt2kAAAPtSURBVHja7Nzbbts6FEDB0ND//zL7mhg1oqoSuS8zjwdBj8SbV4RYY875BQBwxcsQAABCAgAQEgCAkAAAhAQAgJAAAB5wGIJyznyfdwT4N7vPg/GCOGdid/91HnkiYWPZhHvG17gCJXgiAYDfuv3Sc5knEgCAkAAAhAQAICQAACEBACAkAAAhAQAICQCgBi+kAoCfMr95dvmLtzyRAACEBAAgJAAAIQEACAkAACEBAAgJAEBIAABCAgBo7uk3W+54O9hIeu3Dcty2ZnaN/yx6b7PovM3C69F5l/M+QryB86h8c8muezaPihno/z8Kj+0oNn9P39s0Z/Zb8JDZ/nl7FFqYla57NtpgM/A1jaLjPYrO393zNt2X/SYmfvd6YDH4IDOmVe5vFh73WXh8ZpDxibgenXeEDQkRYXOJnV73JgLNmXmLY+vTHN/awIFB1bmb1iViIkdIeBrhWn1wujdjIZCczU1j4uh2wwGu28F9fQxGwY1v7p7/APVHfM67p/dE6zV2JFuUFaJn+FAz/o0Owifmzrzlm7Pq89Y6JlaGxAg26RGue3w5FLuP/9i4trPO3RPzNjff45Pz5rwTE4/yx5Z54sf4u7+z/+YIMHaj+Nq4e4w7zFkHLX8xfFmgPiyxtjCuxu6262wXE55IAMT5IBQpseb66pOiVjEhJADgXFSICSEBAMuCokVMCAkAuBYUZ6JiVg8MIbGfr38C5I+KKzFR4vw/rAEf8gDOu1uC4rdwGN9+dr79bNo/tPVEAgDuj4px4mfeQyNlzAkJAHg2KD693v1vsZEuKIQEAKyLijMxkSoohAQArA2KM//tPSjCRoWQAICYgfEpKoQEAHApJsIFha9/3jOpAM47Vgvx1VFPJAAgd9BtfUIhJAAgf0x87YoJIQEAdWJCSAAAeWJiVUh4hzsAFIwJTyQEEIDzTkykCIlpc2Fuja25syeo5bVhkUZYqMPman9YmtOc42zunHcEs+uFVDPQpsmyuTq+LMaBZh7pOWdejpXIq/GEW6hYK/XHwtwZh6shJYAXhgQ4gI2J6wQh0XLDOmgAAcgnnkosDAkxQcVD19rIOT7mznknJpKGROYNbHNhPdQYK3NnjMTEYsfDC3Um3VwWjcOVXPvd/DnvVsSEdbYwJLJv7syLZRQaC+sn17XYNzmvxYejmAgdEgBQLSb4xtc/AQAhAQAICQBASAAAQgIAQEgAAEICABASAICQAACa82ZLAPjJa7D/gScSAICQAACEBAAgJAAAIQEAICQAACEBAAgJAKAGL6QCoINpCIQEdXhrHLDyvBERQgIA/PISkb+RAACEBAAgJAAAIQEAdPBHgAEAruC43nH9c2MAAAAASUVORK5CYII="></image> </pattern> </defs> <rect id="header__logo--bg" width="269.231" height="50" fill="url(#patternLogo)"></rect> </svg>
+                        <img src="./img/someThings/small-logo.png" alt="" class="logo-mobile">
+                    </a>
+                </div>
+                <div class="location">
+                  <div class="location-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.0325 15.2873L12.0001 22L17.9677 15.2873C22.5447 10.1388 18.8894 2 12.0001 2C5.11079 2 1.45549 10.1388 6.0325 15.2873Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12" cy="10" r="3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  </div>
+                  <div class="location-main">
+                      <p>Xem giá tại</p>
+                      <ul class="location-list">
+                        <h4 class="location-current">
+                            Hồ Chí minh
+                        </h4>
+                        <ul class="location-hidden">
+                            <li class="location-item active"><a href="#" class="location-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Hồ Chí minh
+                            </a></li>
+                            <li class="location-item"><a href="#" class="location-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Hà nội
+                            </a></li>
+                            <li class="location-item"><a href="#" class="location-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                bình dương
+                            </a></li>
+                            <li class="location-item"><a href="#" class="location-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Hải dương
+                            </a></li>
+                            <li class="location-item"><a href="#" class="location-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                hải phòng
+                            </a></li>
+                        </ul>
+                      </ul>
+                      <svg class="location-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 8L12 16L20 8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+                <div class="search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="search-input" placeholder="Bạn cần tìm gì?">
+                </div>
+                <ul class="about">
+                    <li class="about-item"><a href="#" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.51089 2L7.15002 2.13169C7.91653 2.15942 8.59676 2.64346 8.89053 3.3702L9.96656 6.03213C10.217 6.65159 10.1496 7.35837 9.78693 7.91634L8.40831 10.0375C9.22454 11.2096 11.4447 13.9558 13.7955 15.5633L15.5484 14.4845C15.9939 14.2103 16.5273 14.1289 17.0314 14.2581L20.5161 15.1517C21.4429 15.3894 22.0674 16.2782 21.9942 17.2552L21.7705 20.2385C21.6919 21.2854 20.8351 22.1069 19.818 21.9887C6.39245 20.4276 -1.48056 1.99997 3.51089 2Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div class="about-content">
+                            <span>Gọi mua hàng</span>
+                            <span><strong>1800.2097</strong></span>
+                        </div>
+                    </a></li>
+                    <li class="about-item"><a href="" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.0325 15.2873L12.0001 22L17.9677 15.2873C22.5447 10.1388 18.8894 2 12.0001 2C5.11079 2 1.45549 10.1388 6.0325 15.2873Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12" cy="10" r="3" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                        <div class="about-content">
+                            <span>Cửa hàng</span>
+                            <span>gần bạn</span>
+                        </div>
+                    </a></li>
+                    <li class="about-item"><a href="#" class="about-link">
+                        <svg class="about-icon"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44.22 25.85" height="24"><defs><style>.cls-1,.cls-2,.cls-3{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke-width:1.66px;}.cls-2{stroke-width:1.66px;}.cls-3{stroke-width:1.8px;}</style></defs><circle class="cls-1" cx="7.66" cy="22.02" r="3"></circle><circle class="cls-2" cx="24.79" cy="22.02" r="3"></circle><path class="cls-3" d="M28.61,22h4.13a1.44,1.44,0,0,0,1.44-1.44v-6"></path><path class="cls-3" d="M27.12.9H14.82a1.44,1.44,0,0,0-1.44,1.44V20.58A1.44,1.44,0,0,0,14.82,22h6.29"></path><path class="cls-3" d="M10.27,5.92H6.75A2.65,2.65,0,0,0,4.54,7.11L1.33,12A2.64,2.64,0,0,0,.9,13.47v6.46A2.1,2.1,0,0,0,3,22h.75"></path><path class="cls-3" d="M34.18,3.47V2.34A1.44,1.44,0,0,0,32.74.9H25.08"></path><line class="cls-3" x1="43.32" y1="6.97" x2="32.57" y2="6.97"></line><line class="cls-3" x1="40.5" y1="11.05" x2="32.57" y2="11.05"></line><line class="cls-3" x1="42.09" y1="16.33" x2="38.07" y2="16.33"></line></g></g></svg>
+                        <div class="about-content">
+                            
+                            <span>tra cứu</span>
+                            <span>đơn hàng</span>
+                        </div>
+                    </a></li>
+                    <li class="about-item"><a href="#" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9C3 7.89543 3.89543 7 5 7H19C20.1046 7 21 7.89543 21 9V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V9Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 10V6C8 3.79086 9.79086 2 12 2V2C14.2091 2 16 3.79086 16 6V9.6888" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div class="about-content">
+                            <span>giỏ</span>
+                            <span>hàng</span>
+                        </div>
+                    </a></li>
+                    <li class="about-item about-smember"><a href="#" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M4 21V17C4 15.8954 4.89543 15 6 15H18C19.1046 15 20 15.8954 20 17V21" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div class="about-content">
+                            Smember
+                        </div>
+                    </a></li>
+                </ul>
+                <div class="for-mobile">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="about about-mobile">
+                    <li class="about-item"><a href="#" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.51089 2L7.15002 2.13169C7.91653 2.15942 8.59676 2.64346 8.89053 3.3702L9.96656 6.03213C10.217 6.65159 10.1496 7.35837 9.78693 7.91634L8.40831 10.0375C9.22454 11.2096 11.4447 13.9558 13.7955 15.5633L15.5484 14.4845C15.9939 14.2103 16.5273 14.1289 17.0314 14.2581L20.5161 15.1517C21.4429 15.3894 22.0674 16.2782 21.9942 17.2552L21.7705 20.2385C21.6919 21.2854 20.8351 22.1069 19.818 21.9887C6.39245 20.4276 -1.48056 1.99997 3.51089 2Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div class="about-content">
+                            <span>Gọi mua hàng</span>
+                            <span><strong>1800.2097</strong></span>
+                        </div>
+                    </a></li>
+                    <li class="about-item"><a href="" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.0325 15.2873L12.0001 22L17.9677 15.2873C22.5447 10.1388 18.8894 2 12.0001 2C5.11079 2 1.45549 10.1388 6.0325 15.2873Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12" cy="10" r="3" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                        <div class="about-content">
+                            <span>Cửa hàng</span>
+                            <span>gần bạn</span>
+                        </div>
+                    </a></li>
+                    <li class="about-item"><a href="#" class="about-link">
+                        <svg class="about-icon"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44.22 25.85" height="24"><defs><style>.cls-1,.cls-2,.cls-3{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke-width:1.66px;}.cls-2{stroke-width:1.66px;}.cls-3{stroke-width:1.8px;}</style></defs><circle class="cls-1" cx="7.66" cy="22.02" r="3"></circle><circle class="cls-2" cx="24.79" cy="22.02" r="3"></circle><path class="cls-3" d="M28.61,22h4.13a1.44,1.44,0,0,0,1.44-1.44v-6"></path><path class="cls-3" d="M27.12.9H14.82a1.44,1.44,0,0,0-1.44,1.44V20.58A1.44,1.44,0,0,0,14.82,22h6.29"></path><path class="cls-3" d="M10.27,5.92H6.75A2.65,2.65,0,0,0,4.54,7.11L1.33,12A2.64,2.64,0,0,0,.9,13.47v6.46A2.1,2.1,0,0,0,3,22h.75"></path><path class="cls-3" d="M34.18,3.47V2.34A1.44,1.44,0,0,0,32.74.9H25.08"></path><line class="cls-3" x1="43.32" y1="6.97" x2="32.57" y2="6.97"></line><line class="cls-3" x1="40.5" y1="11.05" x2="32.57" y2="11.05"></line><line class="cls-3" x1="42.09" y1="16.33" x2="38.07" y2="16.33"></line></g></g></svg>
+                        <div class="about-content">
+                            
+                            <span>tra cứu</span>
+                            <span>đơn hàng</span>
+                        </div>
+                    </a></li>
+                    <li class="about-item"><a href="#" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9C3 7.89543 3.89543 7 5 7H19C20.1046 7 21 7.89543 21 9V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V9Z" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 10V6C8 3.79086 9.79086 2 12 2V2C14.2091 2 16 3.79086 16 6V9.6888" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div class="about-content">
+                            <span>giỏ</span>
+                            <span>hàng</span>
+                        </div>
+                    </a></li>
+                    <li class="about-item about-smember"><a href="#" class="about-link">
+                        <svg width="24" class="about-icon" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M4 21V17C4 15.8954 4.89543 15 6 15H18C19.1046 15 20 15.8954 20 17V21" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div class="about-content">
+                            Smember
+                        </div>
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="phonePage-name-wrapper">
+        <div class="phonePage-name wrapper">
+            <h1 class="phone-main-name"></h1>
+            <div class="stars-wrapper">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="comment">
+                </p>
+            </div>
+        </div>
+    </div>
+    <main class="main wrapper">
+        <div class="gallery">
+            <div class="swiper gallery-main">
+                <div class="swiper-wrapper gallery-container"></div>
+            </div>
+            <div thumbsSlider="" class="swiper gallery-thumb">
+                <div class="swiper-wrapper gallery-thumb-container"></div>
+            </div>
+        </div>
+        <div class="phonePage-details">
+            <div class="phonePage-heading">
+                <div class="phonePage-info">
+                    <h3></h3>
+                    <p></p>
+                </div>
+            </div>
+            <div class="phonePage-option">
+            </div>
+            <div class="phonePage-color">
+                <h3 class="color-heading">
+                    Chọn màu để xem giá và chi nhánh có hàng
+                </h3>
+                <div class="color-content">
+                    
+                </div>
+            </div>
+            <div class="phonePage-action">
+                <div class="action-buynow">
+                    <a href="#" class="btn-red">
+                        <h3>Mua ngay</h3>
+                        <span>(giao hàng tận nơi hoặc lấy tại cửa hàng)</span>
+                    </a>
+                </div>
+                <div class="action-group">
+                    <a href="#" class="btn-blue">
+                        <h3>Trả góp 0%</h3>
+                        <span>(xét duyệt qua điện thoại)</span>
+                    </a>
+                    <a href="#" class="btn-blue">
+                        <h3>trả góp qua thẻ</h3>
+                        <span>(visa, Master Card,JCB)</span>
+                    </a>
+                </div>
+            </div>
+            <div class="phonePage-box">
+                <h3 class="phonePage-box-name">Ưu đãi thêm</h3>
+                <div class="phonePage-content">
+                    <li class="phonePage-content-item">
+                        <i class="fas fa-check"></i>
+                        <p>Thu cũ đổi mới - Trợ giá tốt nhất</p>
+                    </li>
+                    <li class="phonePage-content-item">
+                        <i class="fas fa-check"></i>
+                        <p>Giảm thêm tới 1% cho thành viên Smember</p>
+                    </li><li class="phonePage-content-item">
+                        <i class="fas fa-check"></i>
+                        <p>Giảm 5% tối đa 500k khi thanh toán bằng ví Moca trên ứng dụng Grab (áp dụng đơn hàng từ 500k)</p>
+                    </li><li class="phonePage-content-item">
+                        <i class="fas fa-check"></i>
+                        <p>Giảm 500.000đ khi thanh toán hoặc trả góp từ 5 triệu trở lên bằng thẻ tín dụng FE Credit</p>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div class="information">
+            <h3 class="information-heading">Thông số kỹ thuật</h3>
+            <div class="information-content">
+            </div>
+        </div>
+    </main>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script async src="https://basicons.xyz/embed.js"></script>
+    <script type="module" src="./phone.js"></script>
+</body>
+</html>

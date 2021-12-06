@@ -1,0 +1,14 @@
+$primary-color : #D70018;
+$while-color : #fff;
+$heading-color : #0a263c;
+$text-color :#333333;
+$text-light-color : #707070;
+$yellow-color :#F59E0B;
+$bg-hover : rgba(255, 255, 255, 0.2);
+$border-color : #E5E7EB;
+$btn-color : #F3F4F6;
+@mixin repons($bp) {
+    @media screen and (max-width : $bp) {
+        @content
+    }
+}
