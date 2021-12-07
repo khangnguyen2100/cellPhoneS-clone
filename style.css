@@ -99,7 +99,7 @@ body {
   height: 12px;
   border-radius: 0.5rem 0 0.5rem 0;
   background: #D70018;
-  background-image: url(../img/checkmark.svg);
+  background-image: url(./img/checkmark.svg);
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
@@ -510,7 +510,7 @@ body {
 }
 
 .sale {
-  background-image: url(../img/someThings/fs-bgs.png);
+  background-image: url(./img/someThings/fs-bgs.png);
   background-size: cover;
   background-position: center;
   width: 100%;
