@@ -117,8 +117,7 @@
                 font-size: 1.8rem;
             }
             &-input {
-                padding:.7rem 0rem;
-                padding-left: 3rem;
+                padding:.7rem 3rem;
                 width: 30rem;
                 border: 0;
                 border-radius: .5rem;
@@ -133,7 +132,14 @@
                 &:focus {
                     outline: none;
                 }
-                
+            }
+            .btn-close {
+                right: 1rem;
+                left: unset;
+                display: none;
+            }
+            .btn-close.see {
+                display: inline-block;
             }
         }
         .about {

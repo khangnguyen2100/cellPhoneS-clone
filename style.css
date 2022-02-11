@@ -285,8 +285,7 @@ body {
   font-size: 1.8rem;
 }
 .header .nav .search-input {
-  padding: 0.7rem 0rem;
-  padding-left: 3rem;
+  padding: 0.7rem 3rem;
   width: 30rem;
   border: 0;
   border-radius: 0.5rem;
@@ -301,6 +300,14 @@ body {
 }
 .header .nav .search-input:focus {
   outline: none;
+}
+.header .nav .search .btn-close {
+  right: 1rem;
+  left: unset;
+  display: none;
+}
+.header .nav .search .btn-close.see {
+  display: inline-block;
 }
 .header .nav .about {
   display: flex;
@@ -929,16 +936,6 @@ body {
     max-width: 100%;
     width: 100%;
   }
-}
-
-.seeMore {
-  width: 33rem;
-  margin: 3rem auto;
-}
-.seeMore p {
-  text-transform: capitalize;
-  text-align: center;
-  font-weight: 500;
 }
 
 .phonePage-name-wrapper {

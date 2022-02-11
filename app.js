@@ -7,7 +7,7 @@ const $$ = document.querySelectorAll.bind(document)
         allowSlideNext : true,
         autoplay: {
             enabled: true,
-            delay: 3000,
+            delay: 5000,
         },
         navigation: {
           nextEl: '.slider-btn-right',
@@ -19,7 +19,7 @@ const $$ = document.querySelectorAll.bind(document)
         allowSlideNext : true,
         autoplay: {
             enabled: true,
-            delay: 3300,
+            delay: 5300,
         },
         navigation: {
           nextEl: '.slider-btn-right',
@@ -57,6 +57,7 @@ const brandItems = $$('.brand-item');
 const saleEl = $('.sale-list')
 const phonesEl = $('.phones')
 const searchEl = $(".search-input")
+const btnClose = document.querySelector(".btn-close")
 const filtering = $(".filtering")
 const filteringList = $(".filtering-list")
 const filteringItems = $$('.filtering-item')
@@ -158,7 +159,7 @@ var arrays = [],object = {},currentRender,currentBackUp,tsktContainer = [],array
         aboutMobile.classList.toggle('active')
         overLay.classList.toggle('active')
     })
-        //active filter UI handle
+    //active filter UI handle
     let filterItemCheck = undefined
     filterItems.forEach((filterItem,i) => {
         filterItem.addEventListener('click',() => {
@@ -669,15 +670,11 @@ const app = {
     },
     // search handle 
     renderSearch : function(e) {
-        const keyWords = e.target.value
-        let result = []
-        result = [...arrays].filter(arr => arr.name.toLowerCase().includes(keyWords.toLowerCase()))
-
-        // keyWords.forEach((key,i) => {
-        //     if(key !== '') {
-        //         result = [...arrays].filter(arr => arr.name.toLowerCase().includes(key.toLowerCase()))
-        //     }
-        // })
+        let result = [...arrays]
+        if(e) {
+            const keyWords = e.target.value
+            result = [...arrays].filter(arr => arr.name.toLowerCase().includes(keyWords.toLowerCase()))
+        }
         $('.overlay').classList.remove('active')
         this.render(result)
     },
@@ -753,3 +750,19 @@ window.addEventListener('load' ,()  => {
 searchEl.onchange = (e) => {
     app.renderSearch(e)
 }
+searchEl.oninput = (e) => {
+    btnClose.classList.add("see")
+}
+btnClose.addEventListener("click" ,() => {
+    btnClose.classList.remove("see")
+    searchEl.value = ""
+    app.renderSearch('')
+})
+window.addEventListener("keydown", (e) => {
+    if(e.key === "/") {
+        setTimeout(() => {
+            searchEl.focus()
+            console.log(1);
+        }, 0);
+    }
+})
