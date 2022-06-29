@@ -30,7 +30,7 @@
         }
         .location {
             background-color: $bg-hover;
-            padding: 0.5rem;
+            padding: 1rem;
             padding-right: 3rem;
             border-radius: 10px;
             
@@ -146,8 +146,8 @@
             display: flex;
             align-items: center;
             &-item {
-                max-width: 12rem;
-                padding: 0.3rem;
+                max-width: 15rem;
+                padding: 1rem;
                 transition: all .2s ease;
                 border-radius: 1rem;
                 &:not(:last-child) {
@@ -203,9 +203,11 @@
             .location {
                 order: 1;
             }
-            .about {
+            .location,
+            .about > *:not(:nth-child(2)) {
                 display: none;
             }
+
             .for-mobile {
                 display: inline-block;
                 z-index: 2000;
@@ -292,4 +294,14 @@
             justify-content: space-around;
         }
     }
+}
+.bag-container {
+    position: relative;
+}
+.bag-amount-item {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    font-size: 15px;
+    font-weight: 500;
 }

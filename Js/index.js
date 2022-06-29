@@ -1,5 +1,3 @@
-const $ = document.querySelector.bind(document)
-const $$ = document.querySelectorAll.bind(document)
 // slider settings
 {
     const slider1 = new Swiper('.slider1', {
@@ -54,7 +52,6 @@ const API_URL = 'https://api.apify.com/v2/key-value-stores/Dk3WYwoH9GqWLc6Cm/rec
 const html = $('html')
 const brandItems = $$('.brand-item');
 
-const saleEl = $('.sale-list')
 const phonesEl = $('.phones')
 const searchEl = $(".search-input")
 const btnClose = document.querySelector(".btn-close")
@@ -64,7 +61,6 @@ const filteringItems = $$('.filtering-item')
 let filteringContainer = {}
 const filterItems = $$(".filter-item");
 const filterBoxItems = $$('.filter-box-item')
-
 const sortItems = $$(".sort-item");
 
 // sort btn
@@ -75,90 +71,10 @@ const sortHot = $(".sort-hot")
 const brandAndroid = $('.brand-android')
 const brandIos = $('.brand-ios')
 // data
-var arrays = [],object = {},currentRender,currentBackUp,tsktContainer = [],array=[],temp=[],temp2=[]
+var arrays = [],object = {},currentRender,currentBackUp,array=[],temp=[]
 
 // UI action 
 {
-    // Header location change
-    const locationHidden = $('.location-hidden');
-    const locationMain = $('.location-main');
-    const locationCurrent = $('.location-current');
-    const locationItems = $$('.location-item');
-    locationItems.forEach((locationItem,i) => {
-        locationItem.addEventListener('click', () => {
-            locationItems.forEach((locationItem,i) => {
-                if(locationItem.classList.contains('active')) {
-                    locationItem.classList.remove('active')
-                }
-            })
-            locationItem.classList.toggle('active')
-            rederLocation(i)
-        })
-    })
-    function rederLocation(i) {
-        const text = locationItems[i].innerText
-        locationCurrent.innerText = text
-    }
-    // handle overlay 
-    const overLay = $('.overlay');
-    const SearchInput = $('.search-input');
-    SearchInput.addEventListener('focus' , () => {
-        overLay.classList.add('active')
-    })
-    SearchInput.addEventListener('blur' , () => {
-        overLay.classList.remove('active')
-    })
-    locationMain.addEventListener('click' ,() => {
-        locationHidden.classList.toggle('active')
-        overLay.classList.toggle('active')
-    })
-    // count down 
-    const dayEl = $('.days')
-    const hourEl = $('.hours')
-    const minuteEl = $('.minutes')
-    const secondEl = $('.seconds')
-    let second = 59,minute = 31,hour = 13,day = 1
-    window.onload = () => {
-        secondEl.innerText = second
-        minuteEl.innerText = minute
-        hourEl.innerText = hour
-        dayEl.innerText = `0${day}`
-        setInterval(() => {
-            second >= 10 ? secondEl.innerText = second : secondEl.innerText = `0${second}`
-            second--
-            if(second == -1)  {
-                changeMinute()
-                second = 59
-            }
-        }, 1000);
-    }
-    function changeMinute() {
-        minute >= 10 ? minuteEl.innerText = minute : minuteEl.innerText = `0${minute}`
-        minute--
-        if(minute == -1)  {
-            changeHour()
-            minute = 59
-        }
-    }
-    function changeHour() {
-        hour >= 10 ? hourEl.innerText = hour : hourEl.innerText = `0${hour}`
-        hour--
-        if(hour == -1)  {
-            hour = 23
-            changeDay()
-        }
-    }
-    function changeDay() {
-        dayEl.innerText = `0${day}`
-        day--
-    }
-    // navigation 
-    const btnMobile = $('.for-mobile');
-    const aboutMobile = $('.about-mobile')
-    btnMobile.addEventListener('click' ,() => {
-        aboutMobile.classList.toggle('active')
-        overLay.classList.toggle('active')
-    })
     //active filter UI handle
     let filterItemCheck = undefined
     filterItems.forEach((filterItem,i) => {
@@ -173,111 +89,85 @@ var arrays = [],object = {},currentRender,currentBackUp,tsktContainer = [],array
     // active sort UI handle
     sortItems.forEach((sortItem,i) => {
         sortItem.addEventListener('click',() => {
-            if(sortItems[0].classList.contains('active') && i == 1) {
-                sortItems[0].classList.remove('active')
-            }
-            if( i == 0 && sortItems[1].classList.contains('active')) {
-                sortItems[1].classList.remove('active')
-            }
+            sortItems.forEach((item,j) => {
+                if(i !== j) item.classList.remove('active')
+            })
             sortItem.classList.toggle('active')
+            app.handleSorts(sortItem,i)
         })
     })
 }
-
 // call API
 function getApi(api) {
+    $(".spinner-wrapper").classList.add('active')
+    $(".overlay").classList.add('active')
+
     fetch(api)
-    .then(res => res.json())
+    .then(res => {
+        return res.json()
+    })
     .then(data => {
-        app.start(data.phone)
+        sessionStorage.setItem('data',JSON.stringify(data.phone))
+        app.start(JSON.parse(sessionStorage.getItem('data')))
+
+        $(".spinner-wrapper").classList.remove('active')
+        $(".overlay").classList.remove('active')
     });
 }
-getApi(API_URL)
+
+if(sessionStorage.getItem('data') == undefined) {
+    getApi(API_URL)
+} else {
+    setTimeout(() => {
+        app.start(JSON.parse(sessionStorage.getItem('data')))
+    }, 0);
+}
+
 const app = {
     // sale section reder
     start : function(phones) {
-        app.createData(phones)
+        this.createData(phones)
         
-        setTimeout(() => {
-            app.renderSale(phones)
-        }, 500);
-        app.render(arrays)
-        app.changeBrand(object)
+        this.render(arrays)
+        this.changeBrand(object)
+    },
+    init : function() {
+
     },
     createData : function(phones) {
-        const arr = Object.values(phones)
-        object = arr
-        arr.forEach((ar,i) => {
-            arrays.push(...ar)
+        const arrayOfObj = Object.values(phones)
+        object = arrayOfObj
+        arrayOfObj.forEach(ar => {
+            return arrays.push(...ar)
         })
-        let  name = []
-        arrays.forEach((arr,i) => {
-            name.push(arr.name)
-        })
-    },
-    renderSale : function(phones) {
-        const keys = Object.values(phones)
-        let randomArray = []
-        for (let i = 0; i < keys.length; i++) {
-            randomArray.push(keys[i][Math.floor(Math.random()*keys[i].length)])
-        }
-        const htmls = randomArray.map((phone, i) => {
-            return `
-                <div class="phoneSale swiper-slide "data-name="${phone.name}">
-                    <div class="phoneSale-sale-per">
-                        ${Math.round((1 - phone.special_price/phone.old_price)*100)>0 ? 
-                            `<img src="./img/someThings/image2.png" alt="">
-                            <p>giảm ${Math.round((1 - phone.special_price/phone.old_price)*100)+'%'}</p>`
-                        : ''}
-                    </div>
-                    <div class="phoneSale-img">
-                        <img src="${phone.image}" alt="">
-                    </div>
-                    <h3 class="phoneSale-name">
-                        ${phone.name}
-                    </h3>
-                    <div class="phoneSale-price">
-                        <p class="phoneSale-price-sale">
-                            ${phone.special_price?this.handlePrice(phone.special_price):this.handlePrice(phone.price)} đ
-                        </p>
-                        <p class="phoneSale-price-old">
-                            ${phone.old_price ? this.handlePrice(phone.old_price) + ` đ`:''}
-                        </p>
-                    </div>
-                </div>
-                </div>
-            `
-        })
-        saleEl.innerHTML = htmls.join('')
+        sessionStorage.setItem('arrays',JSON.stringify(arrays))
+        
     },
     // phones reder
     render : function(phones) {
         currentRender = phones
-        if(phones.length >= 50) {
-            
-        }
         const htmls = phones.map((phone,index) => {
+            const salePrice = Math.round((1 - phone.special_price/phone.old_price)*100)
             return `
                     <a href="./phone.html" class="phone" data-name="${phone.name}">
                         <div class="phone-sale-per">
-                            ${Math.round((1 - phone.special_price/phone.old_price)*100)>0 ? 
-                                `<img src="./img/someThings/image2.png" alt="">
-                                <p>giảm ${Math.round((1 - phone.special_price/phone.old_price)*100)+'%'}</p>`
+                            ${salePrice > 0 ? 
+                                `<img src="./img/images/image2.png">
+                                <p>giảm ${salePrice + '%'}</p>`
                             : ''}
                         </div>
                         <div class="phone-img">
-                            <img src="${phone.image}" alt="">
+                            <img src="${phone.image}" onerror="this.onerror=null; this.src='./img/not_found.jpg';"  alt="Image not found">
                         </div>
                         <h3 class="phone-name">
                             ${phone.name}
                         </h3>
-                      
                         <div class="phone-price">
                             <p class="phone-price-sale">
-                                ${phone.special_price?this.handlePrice(phone.special_price):this.handlePrice(phone.price)} đ
+                                ${formatPrice(phone.special_price ? phone.special_price : phone.price)}
                             </p>
                             <p class="phone-price-old">
-                                ${phone.old_price ? this.handlePrice(phone.old_price) + ` đ`:''}
+                                ${phone.old_price ? formatPrice(phone.old_price) : ''}
                             </p>
                         </div>
                         <div class="phone-rate">
@@ -289,161 +179,117 @@ const app = {
                                 <i class="fas fa-star"></i>
                             </div>
                             <div class="phone-comment">
-                                <p>${Math.floor(Math.random()*100)} đánh giá</p>
+                                <p>35 đánh giá</p>
                             </div>
                         </div>
                     </a>
             `
         })
+        phonesEl.innerHTML = htmls.join('')
+        app.renderPhone()
+        sessionStorage.setItem('arrays', JSON.stringify(currentRender))
         if(phones.length == 0) {
             return phonesEl.innerHTML = `<h3 style="margin : 10rem 0; font-size : 2rem">Xin lỗi không có sản phẩm phù hợp với yêu cầu của bạn.</h3>`
         }
-        // loading...
-        $(".spinner-wrapper").classList.add('active')
-        $(".overlay").classList.add('active')
-        setTimeout(() => {
-            phonesEl.innerHTML = htmls.join('')
-            app.renderPhone()
-            $(".spinner-wrapper").classList.remove('active')
-            $(".overlay").classList.remove('active')
-        }, 500);
-    },
-    // edit price to render
-    handlePrice : function(price) {
-        price = Array.from(price+'')
-        let count = 0
-        let leng = price.length
-        while(leng>=3) {
-            leng-=3
-            price.splice(leng,0,'.')
-        }
-        return price.join('')
-    },
-    // handle render capacity
-    renderCapacity : function(arrs) {
-        let indexColor = 0 ,colors = 0,string = '',htmlSale
-        if(arrs.colors) {
-            for (let i = 0; i < arrs.colors.length; i++) {
-                if(arrs.colors[i].color.length > colors) {
-                    colors = arrs.colors[i].color.length
-                    indexColor = i
-                }
-            }
-            htmlSale = arrs.colors.map((arr,i) => {
-                return `<a class="btn">${arr.color}</a>`
-            })
-        }
-        else {
-            for (let i = 0; i < arrs.capacities.length; i++) {
-                if(arrs.capacities[i].color.length > colors) {
-                    colors = arrs.capacities[i].color.length
-                    indexColor = i
-                }
-            }
-            htmlSale =  arrs.capacities[indexColor].color.map((arr,i) => {
-                return `<a class="btn">${arr.color}</a>`
-            })
-        }
-        htmlSale.forEach((el,i) => {
-            string = string.concat(el)
-        })  
-        return    string
     },
     // handle change brand
     changeBrand : function(object) {
         // active brand
-        let brandCurrentIndex = 11
-        brandItems.forEach((brandItem,i) => {
+        let lastIndex = 11
+        brandItems.forEach((brandItem,index) => {
             brandItem.addEventListener('click', () => {
-                if(brandCurrentIndex !== undefined && brandCurrentIndex !== i) {
-                    brandItems[brandCurrentIndex].classList.remove('active')
-                }
-                brandCurrentIndex = i
+                // save lastIndex and remove it in the second time click
+                brandItems[lastIndex].classList.remove('active')
+                lastIndex = index
 
                 brandItem.classList.toggle('active')
-                if(i == brandItems.length - 1) {
+                // render see all
+                if(index == brandItems.length - 1) {
                     this.render(arrays)
                 }
                 else {
-                    this.render(object[i]) 
+                    // render brand
+                    this.render(object[index]) 
                 }
             })
         })
     },
-    // handle sort
-    sortUpFunc : function(target) {
-        if(this.check(target)) {
-            for (let i = 0; i < currentRender.length-1; i++) {
-                for (let j = i+1; j < currentRender.length; j++) {
-                    if(currentRender[j].price) {
-                        if(currentRender[j].price > currentRender[i].special_price) {
-                            let temp = currentRender[j]
-                            currentRender[j] = currentRender[i]
-                            currentRender[i] = temp
+    handleSorts : function(sortItem,key) {
+        switch (key) {
+            case 0:
+                if(this.check(sortItem)) {
+                    for (let i = 0; i < currentRender.length-1; i++) {
+                        for (let j = i+1; j < currentRender.length; j++) {
+                            if(currentRender[j].price) {
+                                if(currentRender[j].price > currentRender[i].special_price) {
+                                    let temp = currentRender[j]
+                                    currentRender[j] = currentRender[i]
+                                    currentRender[i] = temp
+                                }
+                            }
+                            else if(currentRender[i].price) {
+                                if(currentRender[j].special_price > currentRender[i].price) {
+                                    let temp = currentRender[j]
+                                    currentRender[j] = currentRender[i]
+                                    currentRender[i] = temp
+                                }
+                            }
+                            else if(currentRender[j].special_price > currentRender[i].special_price) {
+                                let temp = currentRender[j]
+                                currentRender[j] = currentRender[i]
+                                currentRender[i] = temp
+                            }
                         }
-                    }
-                    else if(currentRender[i].price) {
-                        if(currentRender[j].special_price > currentRender[i].price) {
-                            let temp = currentRender[j]
-                            currentRender[j] = currentRender[i]
-                            currentRender[i] = temp
-                        }
-                    }
-                    else if(currentRender[j].special_price > currentRender[i].special_price) {
-                        let temp = currentRender[j]
-                        currentRender[j] = currentRender[i]
-                        currentRender[i] = temp
                     }
                 }
+                break;
+            case 1:
+                if(this.check(sortItem)) {
+                    for (let i = 0; i < currentRender.length-1; i++) {
+                        for (let j = i+1; j < currentRender.length; j++) {
+                            if(currentRender[j].price) {
+                                if(currentRender[j].price < currentRender[i].special_price) {
+                                    let temp = currentRender[j]
+                                    currentRender[j] = currentRender[i]
+                                    currentRender[i] = temp
+                                }
+                            }
+                            else if(currentRender[i].price) {
+                                if(currentRender[j].special_price < currentRender[i].price) {
+                                    let temp = currentRender[j]
+                                    currentRender[j] = currentRender[i]
+                                    currentRender[i] = temp
+                                }
+                            }
+                            else if(currentRender[j].special_price < currentRender[i].special_price) {
+                                let temp = currentRender[j]
+                                currentRender[j] = currentRender[i]
+                                currentRender[i] = temp
+                            }
+                        }
+                    }
+                }
+                break;
+            case 2:
+                if(this.check(sortItem)) {
+                    currentRender = currentRender.filter((ar,i) => {
+                        if(ar.special_price/ar.old_price < 0.75) {
+                            return ar
+                        }
+                    })
+                }
+                break;
             }
-        }
         this.render(currentRender)
     },
-    sortDownFunc : function(target) {
-        if(this.check(target)) {
-            for (let i = 0; i < currentRender.length-1; i++) {
-                for (let j = i+1; j < currentRender.length; j++) {
-                    if(currentRender[j].price) {
-                        if(currentRender[j].price < currentRender[i].special_price) {
-                            let temp = currentRender[j]
-                            currentRender[j] = currentRender[i]
-                            currentRender[i] = temp
-                        }
-                    }
-                    else if(currentRender[i].price) {
-                        if(currentRender[j].special_price < currentRender[i].price) {
-                            let temp = currentRender[j]
-                            currentRender[j] = currentRender[i]
-                            currentRender[i] = temp
-                        }
-                    }
-                    else if(currentRender[j].special_price < currentRender[i].special_price) {
-                        let temp = currentRender[j]
-                        currentRender[j] = currentRender[i]
-                        currentRender[i] = temp
-                    }
-                }
-            }
-        }
-        this.render(currentRender)
-    },
-    sortHotFunc : function(target) {
-        if(this.check(target)) {
-            currentRender = currentRender.filter((ar,i) => {
-                if(ar.special_price/ar.old_price < 0.75) {
-                    return ar
-                }
-            })
-        }
-        this.render(currentRender)
-    },
+    
     check : function(target) {
         if(target.classList.contains('active')) {
             currentBackUp = [...currentRender]
             return true
         }
         else {
-            currentRender = currentBackUp
+            currentRender = [...currentBackUp]
             return false
         }
     },
@@ -508,7 +354,7 @@ const app = {
     handleFilter : function() {
         const keys = Object.keys(filteringContainer)
         const values = Object.values(filteringContainer)
-        array = [...arrays]
+        array = [...currentRender]
         keys.forEach((key,indexKey) => {
             temp = array.filter((phone) => {
                 const tskts = phone.tskt
@@ -678,10 +524,6 @@ const app = {
         $('.overlay').classList.remove('active')
         this.render(result)
     },
-    // loading function
-    loading : function() {
-
-    },
     // phone page
     renderPhone : function() {
         const phones = $$(".phone")
@@ -696,24 +538,11 @@ const app = {
             }) 
         })
         function sendData(phone) {
-            const array = arrays
-            const phoneName = phone.dataset.name
-            localStorage.setItem("array", JSON.stringify(array));
-            localStorage.setItem("phoneName", JSON.stringify(phoneName));
-            window.location.href="phone.html";
+            sessionStorage.setItem("arrays", JSON.stringify(arrays));
+            sessionStorage.setItem("phoneName", phone.dataset.name);
         }
     },
 }
-// CLICK ACTION
-sortUp.addEventListener('click' , (e) => {
-    app.sortUpFunc(e.target.parentNode)
-})
-sortDown.addEventListener('click' , (e) => {
-    app.sortDownFunc(e.target.parentNode)
-})
-sortHot.addEventListener('click' , (e) => {
-    app.sortHotFunc(e.target.parentNode)
-})
 
 $(".remove-all").addEventListener('click' ,() => {
     $(".filtering").style = "display : none"
@@ -742,10 +571,7 @@ filteringList.addEventListener('click' , ()=> {
 filterBoxItems.forEach((filterBoxItem) => {
     filterBoxItem.addEventListener('click', app.handleFilter)
 })
-window.addEventListener('load' ,()  => {
-    localStorage.setItem("array", 0);
-    localStorage.setItem("phoneName", 0);
-})
+
 
 searchEl.onchange = (e) => {
     app.renderSearch(e)
@@ -762,7 +588,6 @@ window.addEventListener("keydown", (e) => {
     if(e.key === "/") {
         setTimeout(() => {
             searchEl.focus()
-            console.log(1);
         }, 0);
     }
 })

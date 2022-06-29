@@ -1,52 +1,9 @@
-const $ = document.querySelector.bind(document)
-const $$ = document.querySelectorAll.bind(document)
-{
-    const locationHidden = $('.location-hidden');
-    const locationMain = $('.location-main');
-    const locationCurrent = $('.location-current');
-    const locationItems = $$('.location-item');
-    locationItems.forEach((locationItem,i) => {
-        locationItem.addEventListener('click', () => {
-            locationItems.forEach((locationItem,i) => {
-                if(locationItem.classList.contains('active')) {
-                    locationItem.classList.remove('active')
-                }
-            })
-            locationItem.classList.toggle('active')
-            rederLocation(i)
-        })
-    })
-    function rederLocation(i) {
-        const text = locationItems[i].innerText
-        locationCurrent.innerText = text
-    }
-    // handle overlay 
-    const overLay = $('.overlay');
-    const SearchInput = $('.search-input');
-    SearchInput.addEventListener('focus' , () => {
-        overLay.classList.add('active')
-    })
-    SearchInput.addEventListener('blur' , () => {
-        overLay.classList.remove('active')
-    })
-    locationMain.addEventListener('click' ,() => {
-        locationHidden.classList.toggle('active')
-        overLay.classList.toggle('active')
-    })
-    // navigation 
-    const btnMobile = $('.for-mobile');
-    const aboutMobile = $('.about-mobile')
-    btnMobile.addEventListener('click' ,() => {
-        aboutMobile.classList.toggle('active')
-        overLay.classList.toggle('active')
-    })
-}
+
 window.addEventListener('load' ,() => {
-    var array = localStorage.getItem("array");
-    array = JSON.parse(array)
-    var phoneName = localStorage.getItem("phoneName");
-    phoneName = JSON.parse(phoneName)
-    render(array,phoneName)
+    var arrays = JSON.parse(sessionStorage.getItem("arrays"))
+    var phoneName = sessionStorage.getItem("phoneName")
+
+    render(arrays,phoneName)
 
     //active filter UI handle
     let optionCheck
@@ -72,18 +29,16 @@ window.addEventListener('load' ,() => {
         })
     })
 })
-function render(array,phoneName) {
-    const currentArray = array.find((arr,i) => {
-        return arr.name == phoneName
-    })
+function render(arrays,phoneName) {
+    const currentArray = filterPhoneName(arrays,phoneName)
     $(".phone-main-name").innerText = currentArray.name
-    $(".comment").innerText = Math.floor(Math.random()*100) + " đánh giá"
+    $(".comment").innerText = "35 đánh giá"
     
     // gallery main
     const galleryMain = currentArray.images.map((img,i) => {
         return  `
             <div class="swiper-slide gallery-img">
-                <img src="${img}" alt="">
+                <img src="${img}" onerror="this.onerror=null; this.src='./img/not_found.jpg';" alt="Image not found">
             </div>
         `
     })
@@ -93,8 +48,8 @@ function render(array,phoneName) {
     $(".gallery-thumb-container").innerHTML = galleryMain.join('')
     
     // price 
-    $(".phonePage-info h3").innerText = `${currentArray.special_price ? handlePrice(currentArray.special_price) : handlePrice(currentArray.price)} đ`
-    $(".phonePage-info p").innerText = `${currentArray.old_price ? handlePrice(currentArray.old_price) : handlePrice(currentArray.price)} đ`
+    $(".phonePage-info h3").innerText = formatPrice(currentArray.special_price ? currentArray.special_price : currentArray.price)
+    $(".phonePage-info p").innerText = formatPrice(currentArray.old_price ? currentArray.old_price : currentArray.price)
     
     // slider
     {
@@ -129,17 +84,13 @@ function render(array,phoneName) {
             },
         });
     }
-    
     // capacities
     const optionBtn = currentArray.capacities.map((arr,i) => {
         return `
-            <a class="btn phonePage-option-btn">
+            <a class="btn phonePage-option-btn" data-index="${arr.capacity}">
                 <h3 class="option-name">
                     ${arr.capacity}
                 </h3>
-                <p class="option-price">
-                    ${handlePrice(arr.price)}&nbsp;đ
-                </p>
             </a>
         `
     })
@@ -157,9 +108,8 @@ function render(array,phoneName) {
             }
             colorBtn = currentArray.colors.map((arr,i)=> {
                 return `
-                    <a class="btn phonePage-color-btn">
+                    <a class="btn phonePage-color-btn" data-index="${arr.color}">
                         <h3 class="color-name">${arr.color}</h3>
-                        <p class="color-price">${handlePrice(arr.price)} đ</p>
                     </a>
                 `
             })
@@ -173,9 +123,8 @@ function render(array,phoneName) {
             }
             colorBtn = currentArray.capacities[indexColor].color.map((arr,i)=> {
                 return `
-                    <a class="btn phonePage-color-btn">
+                    <a class="btn phonePage-color-btn" data-index="${arr.color}">
                         <h3 class="color-name">${arr.color}</h3>
-                        <p class="color-price">${handlePrice(arr.price)} đ</p>
                     </a>
                 `
             })
@@ -198,13 +147,59 @@ function render(array,phoneName) {
     })
     $(".information-content").innerHTML = tsktEl.join('')
 }
-function handlePrice(price) {
-    price = Array.from(price+'')
-    let count = 0
-    let leng = price.length
-    while(leng>=3) {
-        leng-=3
-        price.splice(leng,0,'.')
+const addPhoneBtn = $('.addPhoneBtn')
+const phoneValid = $('.phone-valid')
+addPhoneBtn.addEventListener('click' ,() => {
+
+    let  phonePageOptionBtnIndex = $('.phonePage-option-btn.active')
+    console.log(phonePageOptionBtnIndex)
+    let phonePageColorBtnIndex = $('.phonePage-color-btn.active')
+
+    if($('.phonePage-option').children.length == 0) {
+        phonePageOptionBtnIndex = 'unKnow'
     }
-    return price.join('')
-}
+    
+    if($('.color-content').children.length == 0) {
+        phonePageOptionBtnIndex = 'unKnow'
+    }
+    if(phonePageColorBtnIndex == null || phonePageOptionBtnIndex == null) {
+        phoneValid.innerText = 'Vui lòng chọn tùy chọn và màu'
+    } else {
+        phoneValid.innerText = ''
+        let temp = [],check = true
+        let name = sessionStorage.getItem('phoneName')
+        const phoneInfoData = sessionStorage.getItem('phoneInfo')
+        //second time, save all to temp and check if phoneIdex [trung]
+        if(phoneInfoData) {
+            temp = JSON.parse(phoneInfoData)
+            temp.forEach((obj,i) => {
+                if (
+                    name == obj.phoneName && 
+                    obj.option == phonePageOptionBtnIndex?.dataset?.index && 
+                    obj.color == phonePageColorBtnIndex?.dataset?.index
+                    ){
+                        +obj.amountInput++
+                        check = false
+                        sessionStorage.setItem('phoneInfo',JSON.stringify(temp))
+                }
+            })
+        }
+
+        if(check) {
+            sessionStorage.setItem('phoneInfo' , JSON.stringify(
+                [
+                    {
+                        phoneName : name,
+                        amountInput : 1,
+                        option :phonePageOptionBtnIndex == 'unKnow'? phonePageOptionBtnIndex : phonePageOptionBtnIndex.dataset.index ,
+                        color : phonePageColorBtnIndex == 'unKnow'? phonePageColorBtnIndex : phonePageColorBtnIndex.dataset.index ,
+                    },
+                    ...temp
+                ]
+            ))
+            console.log(sessionStorage.phoneInfo);
+            
+        }
+        window.location.href = "./cart.html"
+    }
+})
