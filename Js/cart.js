@@ -55,12 +55,13 @@ const app = {
 
         const htmls = phoneInfo.map(obj => {
             const currentArray = filterPhoneName(arrays,obj.phoneName)
+            img = currentArray.image.replace('cdn.cellphones.com.vn','cdn2.cellphones.com.vn/358x')
 
             return `
                     <li class="shopping-item">
                     <i class='fas fa-times remove-btn'></i>
                         <div class="item-img">
-                            <img src="${currentArray.image}"  onerror="this.onerror=null; this.src='./img/not_found.jpg';" alt="">
+                            <img src="${img}"  onerror="this.onerror=null; this.src='./img/not_found.jpg';" alt="">
                         </div>
                         <div class="item-content">
                             <div class="item-name">
