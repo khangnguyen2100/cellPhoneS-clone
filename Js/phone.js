@@ -36,6 +36,7 @@ function render(arrays,phoneName) {
     
     // gallery main
     const galleryMain = currentArray.images.map((img,i) => {
+        img = img.replace('cdn.cellphones.com.vn','cdn2.cellphones.com.vn/358x')
         return  `
             <div class="swiper-slide gallery-img">
                 <img src="${img}" onerror="this.onerror=null; this.src='./img/not_found.jpg';" alt="Image not found">

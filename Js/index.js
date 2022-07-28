@@ -148,6 +148,8 @@ const app = {
         currentRender = phones
         const htmls = phones.map((phone,index) => {
             const salePrice = Math.round((1 - phone.special_price/phone.old_price)*100)
+            const imgUrl = phone?.image?.replace('cdn.cellphones.com.vn','cdn2.cellphones.com.vn/358x')
+
             return `
                     <a href="./phone.html" class="phone" data-name="${phone.name}">
                         <div class="phone-sale-per">
@@ -157,7 +159,7 @@ const app = {
                             : ''}
                         </div>
                         <div class="phone-img">
-                            <img src="${phone.image}" onerror="this.onerror=null; this.src='./img/not_found.jpg';"  alt="Image not found">
+                            <img src="${imgUrl}" onerror="this.onerror=null; this.src='./img/not_found.jpg';"  alt="Image not found">
                         </div>
                         <h3 class="phone-name">
                             ${phone.name}
